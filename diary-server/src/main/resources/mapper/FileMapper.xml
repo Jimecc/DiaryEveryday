@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jimecc.diaryserver.mapper.FileMapper">
+
+    <!-- 普通的显示图片需要的信息 -->
+    <resultMap id="BasicInfo" type="com.jimecc.diaryserver.entity.File">
+        <id     column="id"             property="id"/>
+        <result column="url"            property="url"/>
+        <result column="name"           property="name"/>
+        <result column="rname"          property="rname"/>
+        <result column="create_date"    property="create_date"/>
+    </resultMap>
+
+    <!-- 在 FastDFS 中删除文件需要的信息：groupName 与 remoteFileName -->
+    <resultMap id="Info4Delete" type="com.jimecc.diaryserver.entity.File">
+        <id     column="id"               property="id"/>
+        <result column="group_name"       property="groupName"/>
+        <result column="remote_file_name" property="remoteFileName"/>
+    </resultMap>
+
+    <insert id="InsertFile" parameterType="com.jimecc.diaryserver.entity.File">
+        INSERT INTO file (user_id,note_id,name,url,info,create_date,group_name,remote_file_name) VALUES (#{user_id},#{note_id},#{name},#{url},#{info},#{create_date},#{groupName},#{remoteFileName});
+    </insert>
+
+    <delete id="DeleteFileById">
+        DELETE FROM file WHERE id=#{id};
+    </delete>
+
+    <select id="Files4SideIndex" resultMap="BasicInfo">
+        SELECT id,url,name,rname,create_date FROM file WHERE user_id=#{user_id} AND note_id=#{note_id} ORDER BY create_date DESC;
+    </select>
+
+    <select id="Info4DelInFastDFS" resultMap="Info4Delete">
+        SELECT group_name,remote_file_name FROM file WHERE id=#{id} AND user_id=#{user_id};
+    </select>
+
+</mapper>

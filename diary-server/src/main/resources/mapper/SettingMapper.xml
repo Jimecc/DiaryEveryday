@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jimecc.diaryserver.mapper.SettingMapper">
+
+    <select id="DefaultMarkdown" resultType="boolean">
+        SELECT default_markdown FROM settings WHERE user_id = #{user_id};
+    </select>
+
+    <select id="FirstLogin" resultType="boolean">
+        SELECT first_login FROM settings WHERE user_id = #{user_id};
+    </select>
+
+    <update id="UpdateDefaultMarkdown">
+        UPDATE settings SET default_markdown=#{value} WHERE user_id=#{user_id};
+    </update>
+
+</mapper>

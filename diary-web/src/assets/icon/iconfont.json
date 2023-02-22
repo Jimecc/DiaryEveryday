@@ -1,0 +1,44 @@
+{
+  "id": "3888663",
+  "name": "iconfont",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4464117",
+      "name": "心情一般-圆",
+      "font_class": "rate-face-1",
+      "unicode": "e7d0",
+      "unicode_decimal": 59344
+    },
+    {
+      "icon_id": "145475",
+      "name": "开心",
+      "font_class": "kaixin",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "1179764",
+      "name": "开心",
+      "font_class": "kaixin1",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "15726837",
+      "name": "开心",
+      "font_class": "rate-face-2",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "18632721",
+      "name": "不开心",
+      "font_class": "rate-face-3",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    }
+  ]
+}

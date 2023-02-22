@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jimecc.diaryserver.mapper.UserMapper">
+
+    <select id="GetUserById" resultType="com.jimecc.diaryserver.entity.User">
+        SELECT id,name,username,password,info,create_date FROM user where id=#{id};
+    </select>
+
+    <select id="GetUserByUsername" resultType="com.jimecc.diaryserver.entity.User">
+        SELECT id,name,username,password FROM user where username=#{username};
+    </select>
+
+    <insert id="CreateUser" parameterType="com.jimecc.diaryserver.entity.User">
+        INSERT INTO user (name,username,password,create_date)  VALUES (#{name},#{username},#{password},#{create_date});
+    </insert>
+
+
+</mapper>

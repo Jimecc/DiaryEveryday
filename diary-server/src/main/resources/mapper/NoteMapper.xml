@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jimecc.diaryserver.mapper.NoteMapper">
+
+    <resultMap id="IndexList" type="com.jimecc.diaryserver.entity.Note">
+        <id column="id"                 property="id"/>
+        <result column="title"          property="title"/>
+        <result column="create_date"    property="create_date"/>
+        <result column="color"          property="color"/>
+        <result column="collection"     property="collection"/>
+        <result column="score"          property="score"/>
+    </resultMap>
+
+    <resultMap id="AllField" type="com.jimecc.diaryserver.entity.Note">
+        <id column="id"                 property="id"/>
+        <result column="user_id"        property="user_id"/>
+        <result column="title"          property="title"/>
+        <result column="create_date"    property="create_date"/>
+        <result column="update_date"    property="update_date"/>
+        <result column="article"        property="article"/>
+        <result column="info"           property="info"/>
+        <result column="color"          property="color"/>
+        <result column="weather"        property="weather"/>
+        <result column="score"          property="score"/>
+        <result column="collection"     property="collection"/>
+        <result column="shit"           property="shit"/>
+        <result column="delete_or_not"  property="delete_or_not"/>
+    </resultMap>
+
+    <select id="SelectNoteById" resultMap="AllField">
+        SELECT * FROM note where id=#{id} AND user_id=#{user_id};
+    </select>
+
+    <select id="GetList4SideIndexAll" resultMap="IndexList">
+        SELECT id,title,create_date,color,collection,score FROM note where user_id=#{user_id}
+    </select>
+
+    <!-- 按照【颜色、收藏、评分、隐藏】来查找note -->
+    <select id="GetList4SideIndex" resultMap="IndexList">
+        SELECT id,title,create_date,color,collection,score FROM note where user_id=#{user_id}
+        <if test="null != create_date">
+            AND create_date=#{create_date}
+        </if>)
+        <if test="null != color">
+            AND color=#{color}
+        </if>)
+        <if test="0 != score">
+            AND score=#{score}
+        </if>)
+        <if test="0 != collection">
+            AND collection=#{collection}
+        </if>)
+        <if test="0 != hidden">
+            AND hidden=#{hidden}
+        </if>);
+    </select>
+
+    <!-- 模糊搜索功能 -->
+    <select id="Search4SideIndex" resultMap="IndexList">
+        SELECT id,title,create_date,color,collection,score FROM diary WHERE ( title LIKE CONCAT('%',#{title},'%')
+        <if test="null != create_date">
+            OR create_date=#{create_date}
+        </if>) AND user_id=#{user_id}
+    </select>
+
+    <delete id="DeleteById" parameterType="Integer">
+        DELETE FROM diary where id=#{id}
+    </delete>
+
+    <insert id="Insert2Note" parameterType="com.jimecc.diaryserver.entity.Note" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO diary (user_id,title,create_date,article,info,color,weather,score,collection,shit,delete_or_not) VALUES (#{user_id},#{title},#{create_date},#{article},#{info},#{color},#{weather},#{score},#{collection},#{shit},#{deleteOrNot});
+    </insert>
+
+    <update id="UpdateById" parameterType="com.jimecc.diaryserver.entity.Note">
+        UPDATE diary SET id=#{id}
+                <if test="null != title">
+                    ,title=#{title}
+                </if>
+                <if test="null != create_date">
+                    ,create_date=#{create_date}
+                </if>
+                <if test="null != article">
+                    ,article=#{article}
+                </if>
+                <if test="null != info">
+                    ,info=#{info}
+                </if>
+                <if test="null != color">
+                    ,color=#{color}
+                </if>
+                <if test="null != weather">
+                    ,weather=#{weather}
+                </if>
+                <if test="null != score">
+                    ,score=#{score}
+                </if>
+                <if test="null != collection">
+                    ,collection=#{collection}
+                </if>
+                <if test="null != shit">
+                    ,shit=#{shit}
+                </if>
+                <if test="null != delete_or_not">
+                    ,delete_or_not=#{delete_or_not}
+                </if>
+        WHERE id=#{id};
+    </update>
+
+    <!-- 查找最新的一篇文章 -->
+    <select id="GetLatestNote" resultType="com.jimecc.diaryserver.entity.Note">
+        SELECT * FROM note WHERE id = (
+            SELECT MAX(id) FROM note WHERE user_id=#{user_id} AND create_date =(
+                SELECT MAX(create_date) FROM note WHERE user_id=#{user_id}
+            )
+        );
+    </select>
+</mapper>
