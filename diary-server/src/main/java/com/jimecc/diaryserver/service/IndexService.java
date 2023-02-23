@@ -12,15 +12,15 @@ import java.util.List;
  * @createTime 2023年02月23日
  */
 public interface IndexService {
-    List<Note> getDirectories();
+    CommonResponse getDirectories();
 
-    List<Note> getDirectoriesByColor(String color);
+    CommonResponse getDirectoriesByColor(String color);
 
-    List<Note> getCollectionDirectories();
+    CommonResponse getCollectionDirectories();
 
-    List<Note> getDirectoriesByScore(int score);
+    CommonResponse getDirectoriesByScore(int score);
 
-    List<Note> searchDirectory(String title);
+    CommonResponse searchDirectory(String title);
 
     CommonResponse getFilesList4Article(int note_id);
 }

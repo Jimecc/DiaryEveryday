@@ -16,7 +16,6 @@ axios.interceptors.request.use(config=>{
 
 // 响应拦截器
 axios.interceptors.response.use(success=>{
-    console.log("success:::::"+JSON.stringify(success));
     // 业务逻辑错误
     if(success.status && success.status == 200){
         if(success.data.status == 500 || success.data.status == 401 || success.data.status == 403){

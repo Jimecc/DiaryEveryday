@@ -317,8 +317,7 @@ export default {
             type: 'success'
           });
           this.getRequest('/index/file/'+this.diaryForm.id).then(resp=> {
-            console.log("刷新Images[]"+JSON.stringify(resp));
-            this.images = resp;
+            this.images = resp.obj;
           });
         }
       })
@@ -331,7 +330,7 @@ export default {
         if (res.status == 200) {
           this.$message.success('提交成功');
           this.getRequest('/file/list4article/'+this.diaryForm.id).then(resp=> {
-            this.images = resp;
+            this.images = resp.obj;
           });
         } else {
           this.$message.error('提交失败')
@@ -342,7 +341,6 @@ export default {
 
     click_button_layout(){
       this.getRequest('/auth/logout').then(resp=>{
-        console.log(JSON.stringify(resp))
         if (resp.status==200){
           localStorage.removeItem('tokenStr');
           localStorage.removeItem('user');
@@ -357,11 +355,7 @@ export default {
         type: 'error'
       }).then(() => {
         this.deleteRequest('/note/delete/'+this.diaryForm.id).then(resp=>{
-          if(resp.data.status == 200){
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
+          if(resp.status == 200){
             this.init_diary_form();
             this.initIndex();
           }else{
@@ -384,7 +378,7 @@ export default {
       console.log("开始请求目录")
       this.getRequest('/index/note/all').then(resp=>{
         if(resp){
-          this.directories = resp;
+          this.directories = resp.obj;
         }
       })
     },
@@ -471,7 +465,7 @@ export default {
     },
     clickENTER(){
       this.getRequest('/index/search/'+this.input_search).then(resp=>{
-        this.directories = resp;
+        this.directories = resp.obj;
       })
     },
     click_show_date(){

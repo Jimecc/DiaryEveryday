@@ -34,4 +34,10 @@
         SELECT group_name,remote_file_name FROM file WHERE id=#{id} AND user_id=#{user_id};
     </select>
 
+    <delete id="DeleteFileByNoteId">
+        DELETE FROM file WHERE user_id=#{user_id} AND note_id=#{note_id};
+    </delete>
+    <select id="Info4DeleteFileWhenDeleteNote" resultMap="Info4Delete">
+        SELECT id,group_name,remote_file_name FROM file WHERE note_id=#{note_id} AND user_id=#{user_id};
+    </select>
 </mapper>

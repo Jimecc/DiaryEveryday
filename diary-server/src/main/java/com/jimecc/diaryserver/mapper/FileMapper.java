@@ -21,4 +21,8 @@ public interface FileMapper {
 
     int DeleteFileById(int id);
 
+    int DeleteFileByNoteId(int note_id,int user_id);
+
+    List<File> Info4DeleteFileWhenDeleteNote(int user_id,int note_id);
+
 }

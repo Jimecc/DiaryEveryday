@@ -64,12 +64,12 @@ public class UserServiceImpl implements UserService {
     public CommonResponse login(String username, String password, String code, HttpServletRequest request) {
         String captcha = (String)request.getSession().getAttribute("captcha");
         if(null==code||!captcha.equalsIgnoreCase(code)){
-            return CommonResponse.error("验证码输入错误，请重新输入！");
+            return CommonResponse.selErr("验证码输入错误，请重新输入！");
         }
 
         UserDetails user = userDetailsService.loadUserByUsername(username);
         if(null == user || ! passwordEncoder.matches(password,user.getPassword())){
-            return CommonResponse.error("用户名或密码不正确");
+            return CommonResponse.selErr("用户名或密码不正确");
         }
 
         // 更新 security 登录用户对象
@@ -80,20 +80,20 @@ public class UserServiceImpl implements UserService {
         Map<String,String> tokenMap = new HashMap<>();
         tokenMap.put("token",token);
         tokenMap.put("tokenHead",tokenHead);
-        return CommonResponse.success("登陆成功",tokenMap);
+        return CommonResponse.selSuc("登陆成功",tokenMap);
     }
 
     public CommonResponse register(UserRegisterParam registerParam){
         if(registerParam.getName()==null || registerParam.getUsername()==null || registerParam.getPassword1()==null || registerParam.getPassword2()==null){
-            return CommonResponse.error("字段不完整");
+            return CommonResponse.selErr("字段不完整");
         }
         if(!registerParam.getPassword1().equals(registerParam.getPassword2())){
-            return CommonResponse.error("两次密码不一致");
+            return CommonResponse.selErr("两次密码不一致");
         }
 
         User user = userMapper.GetUserByUsername(registerParam.getUsername());
         if(user != null){
-            return CommonResponse.error("用户已存在");
+            return CommonResponse.selErr("用户已存在");
         }
 
         User newuser = new User();

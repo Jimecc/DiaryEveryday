@@ -29,29 +29,29 @@ public class IndexController {
     
     // 搜索
     @GetMapping("/search/{str}")
-    public List<Note> search(@PathVariable String str){
+    public CommonResponse search(@PathVariable String str){
         return indexService.searchDirectory(str);
     }
 
     // 查找该用户的所有文章
     @GetMapping("/note/all")
-    public List<Note> getIndexAll(){
+    public CommonResponse getIndexAll(){
         return indexService.getDirectories();
     }
 
     // 按照颜色查找目录
     @GetMapping("/note/color/{color}")
-    public List<Note> getIndexByColor(@PathVariable String color){
+    public CommonResponse getIndexByColor(@PathVariable String color){
         return indexService.getDirectoriesByColor(color);
     }
 
     @GetMapping("/note/collection")
-    public List<Note> getIndexByColletc(){
+    public CommonResponse getIndexByColletc(){
         return indexService.getCollectionDirectories();
     }
 
     @GetMapping("/note/score/{score}")
-    public List<Note> getIndexByScore(@PathVariable int score){
+    public CommonResponse getIndexByScore(@PathVariable int score){
         return indexService.getDirectoriesByScore(score);
     }
 

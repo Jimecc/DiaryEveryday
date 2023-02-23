@@ -57,22 +57,22 @@
 
     <!-- 模糊搜索功能 -->
     <select id="Search4SideIndex" resultMap="IndexList">
-        SELECT id,title,create_date,color,collection,score FROM diary WHERE ( title LIKE CONCAT('%',#{title},'%')
+        SELECT id,title,create_date,color,collection,score FROM note WHERE ( title LIKE CONCAT('%',#{title},'%')
         <if test="null != create_date">
             OR create_date=#{create_date}
         </if>) AND user_id=#{user_id}
     </select>
 
     <delete id="DeleteById" parameterType="Integer">
-        DELETE FROM diary where id=#{id}
+        DELETE FROM note where id=#{id}
     </delete>
 
     <insert id="Insert2Note" parameterType="com.jimecc.diaryserver.entity.Note" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO diary (user_id,title,create_date,article,info,color,weather,score,collection,shit,delete_or_not) VALUES (#{user_id},#{title},#{create_date},#{article},#{info},#{color},#{weather},#{score},#{collection},#{shit},#{deleteOrNot});
+        INSERT INTO note (user_id,title,create_date,article,info,color,weather,score,collection,shit,delete_or_not) VALUES (#{user_id},#{title},#{create_date},#{article},#{info},#{color},#{weather},#{score},#{collection},#{shit},#{deleteOrNot});
     </insert>
 
     <update id="UpdateById" parameterType="com.jimecc.diaryserver.entity.Note">
-        UPDATE diary SET id=#{id}
+        UPDATE note SET id=#{id}
                 <if test="null != title">
                     ,title=#{title}
                 </if>
