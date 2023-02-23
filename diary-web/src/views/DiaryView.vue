@@ -3,7 +3,34 @@
     <el-container>
 
       <el-header class="aheader-1">
-        <el-input  class="input-search" @keyup.enter.native="clickENTER" size="small" suffix-icon="el-icon-search" v-model="input_search" placeholder="看看那天的你在做什么？"></el-input>
+        <div style="width: 100%;display: flex;margin-top: 15px;margin-left: 1.5%;">
+          <el-input  class="input-search" @keyup.enter.native="clickENTER" size="small" suffix-icon="el-icon-search" v-model="input_search" placeholder="看看那天的你在做什么？"></el-input>
+          <!-- 下拉框 -->
+          <el-dropdown>
+            <!-- 小头像 -->
+            <el-avatar style="border: #666666 .1px solid;margin-top: 1.5px;margin-left: 8px" size="small" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGPw0VmAOeVVAAGrxVybNPY458.JPG"></el-avatar>
+            <!-- 下拉框菜单 -->
+            <el-dropdown-menu slot="dropdown" style="width: 180px;">
+              <div style="width: 80%;left: 0;right: 0;margin: 15px auto 10px auto;box-shadow: 0 0 5px #999999;border-radius: 10px;">
+                <div style="width: 100%;text-align: center;">
+                  <el-avatar :size="60" style="box-shadow: 0 0 5px #999999;margin-top: 15px" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGPw0VmAOeVVAAGrxVybNPY458.JPG"></el-avatar>
+                </div>
+                <div style="width: 100%;text-align: center;overflow-y: hidden;margin-top: 5px">
+                  <span style="border-bottom: #cecece .1px solid;padding: 20px 10px 15px 10px;">Jimecc</span>
+                </div>
+                <div style="text-align: center;border-bottom: #cecece .1px solid;padding: 8px 10px;margin-bottom: 20px">
+                  <el-button style="height: 34px;font-size:10px;margin-top: 8px;margin-bottom: 20px" type="info" plain >🏠 个人中心</el-button>
+                </div>
+              </div>
+              <el-dropdown-item>
+                <el-button @click="click_button_layout" type="text" size="small" style="color: #999999;width: 100%;text-align: left">设置</el-button>
+              </el-dropdown-item>
+              <el-dropdown-item click="click_button_layout">
+                <el-button @click="click_button_layout" type="text" size="small" style="color: #999999;width: 100%;text-align: left">退出登录</el-button>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </el-header>
       <el-divider>每日一记</el-divider>
       <el-container class="aheader-2">
@@ -16,10 +43,6 @@
         </div>
         <div class="header2-2">
           <el-button type="primary" size="small" icon="el-icon-circle-plus-outline" class="button-header2-rignt-2" @click="goNewDiary">新建文章</el-button>
-          <el-button type="primary" size="small" icon="el-icon-setting"             class="button-header2-rignt-2">设置</el-button>
-          <el-button type="primary" icon="el-icon-mobile"           @click="click_button_test" style="font-size:20px;float: right; padding: 3px 0"></el-button>
-          <el-button type="primary" size="small" icon="el-icon-milk-tea"            class="button-header2-rignt-2" @click="clickTest"></el-button>
-          <el-button type="danger"  size="small" icon="el-icon-bicycle"             class="button-header2-rignt-1" @click="click_button_layout">退出</el-button>
         </div>
       </el-container>
 
@@ -46,9 +69,9 @@
             </div>
             <div v-if="this.show.show_color" class="chose-color" style="padding: 5px 0;">
               <el-rate v-model="score"></el-rate>
-                <el-tooltip content="查找" placement="bottom" effect="light">
-                  <el-button size="small" type="primary" @click="click_rate" style="  border-radius: 8px;height: 15px;padding: 5px;margin: 0px 0 0 70%;background-color:#fff;width: 45px"></el-button>
-                </el-tooltip>
+              <el-tooltip content="查找" placement="bottom" effect="light">
+                <el-button size="small" type="primary" @click="click_rate" style="  border-radius: 8px;height: 15px;padding: 5px;margin: 0px 0 0 70%;background-color:#fff;width: 45px"></el-button>
+              </el-tooltip>
             </div>
 
             <div class="div2_4">
@@ -57,7 +80,7 @@
                     v-for="(directory, index) in directories"
                     :key="index"
                     :color="directory.color">
-<!--                  :timestamp="directory.create_date"-->
+                  <!--                  :timestamp="directory.create_date"-->
                   <div class="div2_5">
                     <el-button style="color: gray;margin-top: -10px" type="text" @click="clickDiaryName(directory.id)">
                       <span style="color: black">{{directory.title}}</span>
@@ -77,62 +100,62 @@
         </el-aside>
 
         <el-main class="main-out" style="display: flex">
-              <el-card class="article-card">
-                <div slot="header">
-                  <span class="article_title">{{diaryForm.title}}</span>
-                  <span class="article_date">{{diaryForm.create_date}}</span>
-                  <el-button :disabled="diaryForm.id == null" icon="el-icon-delete"           @click="click_delete_diary" style="font-size:20px;float: right; padding: 3px 0;margin-left: 10px" :style="this.diaryForm.id==null ? '' : 'color:red'" type="text"></el-button>
-                  <el-button :disabled="diaryForm.id == null" icon="el-icon-edit"             @click="click_button_editor" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
-                  <el-button :disabled="diaryForm.id == null" icon="el-icon-full-screen" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
-                  <el-button :disabled="diaryForm.id == null" icon="el-icon-picture-outline"  @click="click_show_img" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
-                </div>
-                <div class="div-article">
-                  <div class="text-item">
-  <!--                  {{this.diaryForm.article}}-->
-                    <span v-if="this.diaryForm.article=='' && this.diaryForm.title==''">[暂无内容]</span>
-                    <el-skeleton v-if="this.diaryForm.article==''" />
-                    <DiaryArticle :article="this.diaryForm.article"></DiaryArticle>
-                  </div>
-                </div>
-              </el-card>
-
-
-
-              <div  v-if="this.show.show_img"  class="div-img-out" style="height:720px;">
-
-                <div class="diary-div-pics">
-                  <div style="display: flow;width:40px;">
-                    <el-row>
-                      <el-col  :span="32" v-for="(img, index) in images" :key="index" :offset="index > 0 ? 2 : 0">
-                        <div :body-style="{ padding: '0px' }" style="overflow-x: hidden;width: 210px;height:auto;padding:10px;margin: 20px 30px 20px 30px;border-radius:15px;box-shadow: 0 0 5px #9a9a9a">
-                          <img style="width:100%;height: auto;left:0;right:0;margin:auto;box-shadow: 0 0 5px #ffebcd" :src="img.url" class="drawer-s-images">
-                          <div style="padding: 14px;">
-                            <span style="width: 90%;padding: 0 10px 0 0;">{{ img.rname==null ? img.name : img.rname }}</span>
-                            <div>
-                              <time class="time">{{ img.create_date }}</time>
-                            </div>
-                            <div class="div-img-button-edit">
-                              <el-button type="text" icon="el-icon-edit"   class="button-img-edit"></el-button>
-                              <el-button type="text" icon="el-icon-view"   @click="click_view_image(index)"     class="button-img-edit"></el-button>
-                              <el-button type="text" icon="el-icon-delete" @click="click_delete_image(img.id)"  class="button-img-delete"></el-button>
-                            </div>
-                          </div>
-                        </div>
-                      </el-col>
-                    </el-row>
-                  </div>
-
-                </div>
-                <div style="height: 40px;width: 100%">
-                  <el-upload
-                      :http-request="handleUploadForm"
-                      class="upload-demo"
-                      multiple
-                      show-file-list="false">
-                    <el-button type="primary" style="width: 300%;margin: 5px 5% 0 5%">上传图片</el-button>
-                  </el-upload>
-                </div>
+          <el-card class="article-card">
+            <div slot="header">
+              <span class="article_title">{{diaryForm.title}}</span>
+              <span class="article_date">{{diaryForm.create_date}}</span>
+              <el-button :disabled="diaryForm.id == null" icon="el-icon-delete"           @click="click_delete_diary" style="font-size:20px;float: right; padding: 3px 0;margin-left: 10px" :style="this.diaryForm.id==null ? '' : 'color:red'" type="text"></el-button>
+              <el-button :disabled="diaryForm.id == null" icon="el-icon-edit"             @click="click_button_editor" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
+              <el-button :disabled="diaryForm.id == null" icon="el-icon-full-screen" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
+              <el-button :disabled="diaryForm.id == null" icon="el-icon-picture-outline"  @click="click_show_img" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
+            </div>
+            <div class="div-article">
+              <div class="text-item">
+                <!--                  {{this.diaryForm.article}}-->
+                <span v-if="this.diaryForm.article=='' && this.diaryForm.title==''">[暂无内容]</span>
+                <el-skeleton v-if="this.diaryForm.article==''" />
+                <DiaryArticle :article="this.diaryForm.article"></DiaryArticle>
               </div>
+            </div>
+          </el-card>
+
+
+
+          <div  v-if="this.show.show_img"  class="div-img-out" style="height:720px;">
+
+            <div class="diary-div-pics">
+              <div style="display: flow;width:40px;">
+                <el-row>
+                  <el-col  :span="32" v-for="(img, index) in images" :key="index" :offset="index > 0 ? 2 : 0">
+                    <div :body-style="{ padding: '0px' }" style="overflow-x: hidden;width: 210px;height:auto;padding:10px;margin: 20px 30px 20px 30px;border-radius:15px;box-shadow: 0 0 5px #9a9a9a">
+                      <img style="width:100%;height: auto;left:0;right:0;margin:auto;box-shadow: 0 0 5px #ffebcd" :src="img.url" class="drawer-s-images">
+                      <div style="padding: 14px;">
+                        <span style="width: 90%;padding: 0 10px 0 0;">{{ img.rname==null ? img.name : img.rname }}</span>
+                        <div>
+                          <time class="time">{{ img.create_date }}</time>
+                        </div>
+                        <div class="div-img-button-edit">
+                          <el-button type="text" icon="el-icon-edit"   class="button-img-edit"></el-button>
+                          <el-button type="text" icon="el-icon-view"   @click="click_view_image(index)"     class="button-img-edit"></el-button>
+                          <el-button type="text" icon="el-icon-delete" @click="click_delete_image(img.id)"  class="button-img-delete"></el-button>
+                        </div>
+                      </div>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+
+            </div>
+            <div style="height: 40px;width: 100%">
+              <el-upload
+                  :http-request="handleUploadForm"
+                  class="upload-demo"
+                  multiple
+                  show-file-list="false">
+                <el-button type="primary" style="width: 300%;margin: 5px 5% 0 5%">上传图片</el-button>
+              </el-upload>
+            </div>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -173,15 +196,9 @@
 
 <script>
 import DiaryArticle from "@/components/DiaryArticle.vue";
-import SideImage from '@/components/SideImage.vue'
-import EditorDiary from '@/components/EditorDiary.vue'
-import ViewImage from "@/components/ViewImage.vue";
 export default {
   name: "DiaryView",
   components:{
-    EditorDiary,
-    SideImage,
-    ViewImage,
     DiaryArticle
   },
   data() {
@@ -231,10 +248,13 @@ export default {
   },
   mounted(){
     this.initIndex();
+    this.getLatestNote();
   },
   methods:{
-    click_button_test(){
-      this.getRequest('/note/latest');
+    getLatestNote(){
+      this.getRequest('/note/latest').then(resp=>{
+        this.diaryForm = resp.obj;
+      })
     },
     clicklast(image){
       this.i --;
@@ -264,21 +284,21 @@ export default {
       })
     },
     handleUploadForm(param){
-        let formData = new FormData()
-        formData.append('file', param.file)
-        formData.append('note_id', this.diaryForm.id)
-        this.postRequest('/file/upload', formData).then((res) => {
-          if (res.status == 200) {
-            this.$message.success('提交成功');
-            this.getRequest('/file/list4article/'+this.diaryForm.id).then(resp=> {
-              this.images = resp;
-            });
-          } else {
-            this.$message.error('提交失败')
-          }
-          this.formFileList = []
-          this.uploadFormFileList = []
-        })
+      let formData = new FormData()
+      formData.append('file', param.file)
+      formData.append('note_id', this.diaryForm.id)
+      this.postRequest('/file/upload', formData).then((res) => {
+        if (res.status == 200) {
+          this.$message.success('提交成功');
+          this.getRequest('/file/list4article/'+this.diaryForm.id).then(resp=> {
+            this.images = resp;
+          });
+        } else {
+          this.$message.error('提交失败')
+        }
+        this.formFileList = []
+        this.uploadFormFileList = []
+      })
 
     },
     click_upload(id){
@@ -302,7 +322,8 @@ export default {
     },
     click_button_layout(){
       this.getRequest('/auth/logout').then(resp=>{
-        if (resp){
+        console.log(JSON.stringify(resp))
+        if (resp.status==200){
           window.sessionStorage.removeItem('tokenStr');
           window.sessionStorage.removeItem('user');
           this.$router.replace('/login');
@@ -310,29 +331,29 @@ export default {
       })
     },
     click_delete_diary(){
-          this.$confirm('此操作将删除该日记，删除后不可恢复，是否继续？', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'error'
-          }).then(() => {
-            this.deleteRequest('/note/delete/'+this.diaryForm.id).then(resp=>{
-              if(resp.data.status == 200){
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                });
-                this.init_diary_form();
-                this.initIndex();
-              }else{
-                this.$message.error('删除失败，可能您未选中文章，或已经提交过删除请求了！');
-              }
-          }).catch(() => {
+      this.$confirm('此操作将删除该日记，删除后不可恢复，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'error'
+      }).then(() => {
+        this.deleteRequest('/note/delete/'+this.diaryForm.id).then(resp=>{
+          if(resp.data.status == 200){
             this.$message({
-              type: 'info',
-              message: '已取消删除'
+              type: 'success',
+              message: '删除成功!'
             });
+            this.init_diary_form();
+            this.initIndex();
+          }else{
+            this.$message.error('删除失败，可能您未选中文章，或已经提交过删除请求了！');
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
           });
-        })
+        });
+      })
 
     },
     goNewDiary(){
@@ -340,10 +361,10 @@ export default {
     },
     clickTest(){
       this.getRequest('/time/20221221').then(resp=>{
-        if(resp){
-          this.diaryForm = resp.data.obj;
-        }
-      }
+            if(resp){
+              this.diaryForm = resp.data.obj;
+            }
+          }
       )
     },
     initIndex(){
@@ -390,6 +411,7 @@ export default {
             this.images = resp;
             this.show.show_img = true;
           }else{
+            this.images = [];
             this.show.show_img = false
             this.$message({
               message: '此日记没有相册',
@@ -458,19 +480,19 @@ export default {
       this.show.show_date = !this.show.show_date;
     },
     init_diary_form() {
-          this.diaryForm.id = null;
-          this.diaryForm.info = '';
-          this.diaryForm.title = null;
-          this.diaryForm.article = '';
-          this.diaryForm.create_date = null;
-          this.diaryForm.update_date = null;
-          this.diaryForm.color = '';
-          this.diaryForm.weather = '';
-          this.diaryForm.score = null;
-          this.diaryForm.collection = null;
-          this.diaryForm.shit = null;
-          this.diaryForm.delete = null;
-          this.diaryForm.manager_id = null;
+      this.diaryForm.id = null;
+      this.diaryForm.info = '';
+      this.diaryForm.title = null;
+      this.diaryForm.article = '';
+      this.diaryForm.create_date = null;
+      this.diaryForm.update_date = null;
+      this.diaryForm.color = '';
+      this.diaryForm.weather = '';
+      this.diaryForm.score = null;
+      this.diaryForm.collection = null;
+      this.diaryForm.shit = null;
+      this.diaryForm.delete = null;
+      this.diaryForm.manager_id = null;
     }
   }
 }
@@ -493,8 +515,9 @@ export default {
   width: 100%;
   margin-top: 60px;
   background-color: #f6f6f6;
-  border-top: gray 1px solid;
-  border-bottom: gray 1px solid;
+  border-top: #ababab 1px solid;
+  border-bottom: #ababab 1px solid;
+  border-radius: 15px;
   padding: 15px 0;
 }
 .aheader-1{
@@ -525,7 +548,6 @@ export default {
 .input-search{
   width: 95%;
   height: 15px;
-  margin-top: 15px;
   border: black;
   margin-right: 10px;
 }
@@ -554,6 +576,7 @@ export default {
 }
 .button-header2-rignt-2{
   border-radius: 10px;
+  margin-right: 18px;
 }
 .button_xx{
   border-radius: 15px;

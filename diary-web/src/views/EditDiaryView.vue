@@ -129,14 +129,10 @@
   </div>
 </template>
 <script>
-import FilesManagement from "@/components/FilesManagement.vue";
 export default {
   name: "EditDiaryView",
   props:{
     diary_id: String
-  },
-  components:{
-    FilesManagement
   },
   data() {
     return {
