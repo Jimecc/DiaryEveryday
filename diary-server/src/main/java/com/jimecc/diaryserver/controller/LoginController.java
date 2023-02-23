@@ -1,7 +1,6 @@
 package com.jimecc.diaryserver.controller;
 
 import com.jimecc.diaryserver.entity.CommonResponse;
-import com.jimecc.diaryserver.entity.User;
 import com.jimecc.diaryserver.entity.UserLoginParam;
 import com.jimecc.diaryserver.entity.UserRegisterParam;
 import com.jimecc.diaryserver.service.UserService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 /**
  * @author Jim
