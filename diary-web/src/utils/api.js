@@ -6,8 +6,8 @@ import router from '../router'
 // 请求拦截器
 axios.interceptors.request.use(config=>{
     // 如果存在 token，请求携带这个 token
-    if(window.sessionStorage.getItem('tokenStr')){
-        config.headers['Authorization'] = window.sessionStorage.getItem('tokenStr');
+    if(localStorage.getItem('tokenStr')){
+        config.headers['Authorization'] = localStorage.getItem('tokenStr');
     }
     return config;
 },error=>{
@@ -16,9 +16,10 @@ axios.interceptors.request.use(config=>{
 
 // 响应拦截器
 axios.interceptors.response.use(success=>{
+    console.log("success:::::"+JSON.stringify(success));
     // 业务逻辑错误
     if(success.status && success.status == 200){
-        if(success.data.code == 500 || success.data.code == 401 || success.data.code == 403){
+        if(success.data.status == 500 || success.data.status == 401 || success.data.status == 403){
             Message.error({message:success.data.message});
             return;
         }
@@ -29,7 +30,7 @@ axios.interceptors.response.use(success=>{
     return success.data;
 
 },error=>{
-    alert(JSON.stringify(error))
+    console.log("error:::::"+JSON.stringify(error));
     if(error.response.code == 504 || error.response.code == 404){
         Message.error({message:'服务器被吃了'});
     }else if(error.response.code == 403){
@@ -45,7 +46,6 @@ axios.interceptors.response.use(success=>{
         }
     }
     return;
-    // alert("xxx222");
 })
 
 

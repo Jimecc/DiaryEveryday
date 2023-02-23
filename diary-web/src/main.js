@@ -28,14 +28,14 @@ Vue.prototype.putRequest    = putRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 
 router.beforeEach((to,from,next)=>{
-  console.log("TOKENSTR:"+window.sessionStorage.getItem('tokenStr'))
-  console.log("USER:"+window.sessionStorage.getItem('user'));
-  if(window.sessionStorage.getItem('tokenStr')){
-    if(!window.sessionStorage.getItem('user')){
+  console.log("TOKENSTR:"+localStorage.getItem('tokenStr'))
+  console.log("USER:"+localStorage.getItem('user'));
+  if(localStorage.getItem('tokenStr')){
+    if(!localStorage.getItem('user')){
       // 判断用户信息是否存在
       return getRequest('/user/info').then(resp=>{
         if(resp){
-          window.sessionStorage.setItem('user',JSON.stringify(resp));
+          localStorage.setItem('user',JSON.stringify(resp));
           next('/');
         }
       })

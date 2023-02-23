@@ -27,7 +27,7 @@
     </delete>
 
     <select id="Files4SideIndex" resultMap="BasicInfo">
-        SELECT id,url,name,rname,create_date FROM file WHERE user_id=#{user_id} AND note_id=#{note_id} ORDER BY create_date DESC;
+        SELECT id,url,name,rname,create_date FROM file WHERE user_id=#{user_id} AND note_id=#{note_id} ORDER BY create_date DESC,id DESC;
     </select>
 
     <select id="Info4DelInFastDFS" resultMap="Info4Delete">

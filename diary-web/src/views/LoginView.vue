@@ -1,39 +1,39 @@
 <template>
-<div class="div1">
-  <el-form class="div2" :rules="rules" ref="loginForm" :model="loginForm">
+  <div class="div1">
+    <el-form class="div2" :rules="rules" ref="loginForm" :model="loginForm">
 
 
-    <h1 style="margin-top: 35px">登录</h1>
-    <el-divider>每日一记</el-divider>
-    <el-form-item prop="username">
-      <el-input prefix-icon="el-icon-s-custom" v-model="loginForm.username" class="input_1" placeholder="请输入用户名" ></el-input>
-    </el-form-item>
-    <el-form-item prop="password" style="margin-top: -20px">
-      <el-input prefix-icon="el-icon-key" v-model="loginForm.password" class="input_1" placeholder="请输入密码" show-password></el-input>
-    </el-form-item>
-    <div style="height: 60px;display: flex;margin-top: 20px">
-      <el-form-item prop="code">
-        <el-input v-model="loginForm.code" auto-complete="false" prefix-icon="el-icon-guide" class="input-code" placeholder="请输入验证码"></el-input>
+      <h1 style="margin-top: 35px">登录</h1>
+      <el-divider>每日一记</el-divider>
+      <el-form-item prop="username">
+        <el-input prefix-icon="el-icon-s-custom" v-model="loginForm.username" class="input_1" placeholder="请输入用户名" ></el-input>
       </el-form-item>
+      <el-form-item prop="password" style="margin-top: -20px">
+        <el-input prefix-icon="el-icon-key" v-model="loginForm.password" class="input_1" placeholder="请输入密码" show-password></el-input>
+      </el-form-item>
+      <div style="height: 60px;display: flex;margin-top: 20px">
+        <el-form-item prop="code">
+          <el-input v-model="loginForm.code" auto-complete="false" prefix-icon="el-icon-guide" class="input-code" placeholder="请输入验证码"></el-input>
+        </el-form-item>
         <img style="width: 100px;height: 38px;margin-top: 10px;margin-left: 30px;border-radius: 10px;border: orange 1px solid" src="http://localhost:8080/captcha">
-    </div>
+      </div>
 
-    <el-button type="primary" @click="click_button_login" class="button-submit">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
-    <el-button type="text" @click="click_go_register" style="width: 20%;text-align: left;margin-top: 20px">注册</el-button>
-    <el-button type="text" style="margin-left: 30%">忘记密码</el-button>
+      <el-button type="primary" @click="click_button_login" class="button-submit">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button>
+      <el-button type="text" @click="click_go_register" style="width: 20%;text-align: left;margin-top: 20px">注册</el-button>
+      <el-button type="text" style="margin-left: 30%">忘记密码</el-button>
 
-  </el-form>
+    </el-form>
 
     <div class="div-3">
       <el-tooltip content="Github" placement="top">
-          <img @click="click_img_1" class="img-1" src="../assets/github-black.png">
+        <img @click="click_img_1" class="img-1" src="../assets/github-black.png">
       </el-tooltip>
       <el-tooltip content="Gitee" placement="top">
         <img @click="click_img_2" class="img-1" src="../assets/gitee.png">
       </el-tooltip>
     </div>
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -64,9 +64,8 @@ export default {
             console.log("RESP:"+JSON.stringify(resp));
             if (resp) {
               const tokenStr = resp.obj.tokenHead + resp.obj.token;
-              window.sessionStorage.setItem('tokenStr', tokenStr);
+              localStorage.setItem('tokenStr', tokenStr);
               if (resp.status == 200) {
-                alert("dengl")
                 let path = this.$route.query.redirect;
                 this.$router.replace((path == '/' || path == undefined) ? '/' : path);
               }
@@ -77,7 +76,7 @@ export default {
           return false;
         }
       })
-      },
+    },
     click_img_1(){
       window.location.href = 'https://github.com/Jimecc/';
     },

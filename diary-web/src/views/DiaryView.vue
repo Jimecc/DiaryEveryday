@@ -2,6 +2,7 @@
   <div style="background-size: cover;height: 100%;">
     <el-container>
 
+      <!------- Header部分 包含：搜索框、头像、头像弹窗----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
       <el-header class="aheader-1">
         <div style="width: 100%;display: flex;margin-top: 15px;margin-left: 1.5%;">
           <el-input  class="input-search" @keyup.enter.native="clickENTER" size="small" suffix-icon="el-icon-search" v-model="input_search" placeholder="看看那天的你在做什么？"></el-input>
@@ -32,7 +33,11 @@
           </el-dropdown>
         </div>
       </el-header>
+
+      <!------- 分割线 每日一记 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
       <el-divider>每日一记</el-divider>
+
+      <!------- 按钮层 包含：五个按钮、新建文章----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
       <el-container class="aheader-2">
         <div class="header2-1">
           <el-button @click="initIndex" class="button1" size="small" icon="el-icon-milk-tea"></el-button>
@@ -46,6 +51,7 @@
         </div>
       </el-container>
 
+      <!------- 主体 包含：一个Index、一个显示文章、一个图片显示 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
       <el-container>
         <el-aside class="aside-out">
           <div v-if="show.show_date" class="div-side-search-date">
@@ -74,6 +80,7 @@
               </el-tooltip>
             </div>
 
+            <!------- 目录侧边栏部分 -------------->
             <div class="div2_4">
               <el-timeline :reverse="reverse">
                 <el-timeline-item
@@ -109,6 +116,7 @@
               <el-button :disabled="diaryForm.id == null" icon="el-icon-full-screen" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
               <el-button :disabled="diaryForm.id == null" icon="el-icon-picture-outline"  @click="click_show_img" style="font-size:20px;float: right; padding: 3px 0" type="text"></el-button>
             </div>
+            <!------- 主体部分 文章显示 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
             <div class="div-article">
               <div class="text-item">
                 <!--                  {{this.diaryForm.article}}-->
@@ -159,6 +167,38 @@
         </el-main>
       </el-container>
     </el-container>
+    <el-dialog width="60%" title="查看图片" :visible.sync="show.dialogViewImg">
+      <div class="div-out-width" v-for="(image,index) in images">
+        <div class="div-image-out">
+          <img class="image-view" v-show="index == i" :src="image.url"/>
+          <!--放图片信息与按钮的div-->
+          <div v-show="index==i" style="width: 25%;padding:10px 0">
+
+            <div style="width: 100%;margin-left: 5px">
+              <div style="width: 100%;border-bottom: #999999 0.1px solid;padding-bottom: 3px;">
+                <h1>{{image.rname?image.rname:image.name}}</h1>
+              </div>
+              <div style="width: 100%;border-bottom: #999999 0.1px solid;padding-bottom: 3px">
+                <h4>创建时间</h4>
+                <span>{{ image.create_date }}</span>
+              </div>
+              <div style="width: 100%;border-bottom: #999999 0.1px solid;padding-bottom: 3px">
+                <h4>简介</h4>
+                <span>{{image.info?image.info:"没有简介信息哦～"}}</span>
+              </div>
+            </div>
+
+            <div slot="footer" v-show="index==i" class="button-flooter">
+              <el-button @click="clicklast(image)" :disabled="i<=0" type="primary" style="border-radius: 20px 0 0 20px;" size="small" icon="el-icon-arrow-left">上一页</el-button>
+              <el-button @click="clicknext(image)"  :disabled="i>=images.length -1" type="primary" style="border-radius: 0 20px 20px 0;" size="small">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+            </div>
+            <!--        <el-button-group style="margin: 30px 7% 0 8%">-->
+            <!--          -->
+            <!--        </el-button-group>-->
+          </div>
+        </div>
+      </div>
+    </el-dialog>
     <el-dialog width="60%" title="查看图片" :visible.sync="show.dialogViewImg">
       <div class="div-out-width" v-for="(image,index) in images">
         <div class="div-image-out">
@@ -296,36 +336,16 @@ export default {
         } else {
           this.$message.error('提交失败')
         }
-        this.formFileList = []
-        this.uploadFormFileList = []
       })
 
     },
-    click_upload(id){
-      console.log(id)
-    },
-    clickUploadForm(param){
-      let formData = new FormData()
-      // 在formData中加入我们需要的参数
-      formData.append('file', param.file)
-      formData.append('diary_id', 1)
-      // 向后端发送数据
-      this.postRequest('/file/upload', formData).then((res) => {
-        if (res.status === 200) {
-          this.$message.success('修改信息成功')
-        } else {
-          this.$message.success('修改信息失败')
-        }
-        this.formFileList = []
-        this.uploadFormFileList = []
-      })
-    },
+
     click_button_layout(){
       this.getRequest('/auth/logout').then(resp=>{
         console.log(JSON.stringify(resp))
         if (resp.status==200){
-          window.sessionStorage.removeItem('tokenStr');
-          window.sessionStorage.removeItem('user');
+          localStorage.removeItem('tokenStr');
+          localStorage.removeItem('user');
           this.$router.replace('/login');
         }
       })
@@ -359,14 +379,6 @@ export default {
     goNewDiary(){
       this.$router.push('/new')
     },
-    clickTest(){
-      this.getRequest('/time/20221221').then(resp=>{
-            if(resp){
-              this.diaryForm = resp.data.obj;
-            }
-          }
-      )
-    },
     initIndex(){
       // initIndex(){
       console.log("开始请求目录")
@@ -376,6 +388,7 @@ export default {
         }
       })
     },
+
     click_order(){
       if(this.reverse == true){
         this.reverse = false;
@@ -385,9 +398,11 @@ export default {
         this.icons.order = 'el-icon-bottom';
       }
     },
+
     click_show_color(){
       this.show.show_color = !this.show.show_color;
     },
+
     click_button_color(color){
       this.getRequest('/index/note/color/'+color).then(resp=>{
         if(resp) {
@@ -405,18 +420,12 @@ export default {
     },
     clickDiaryName(id){
       // 请求相册
-      if(this.show.show_img || this.show.show_img_flag){ // 如果相册是true，那么就请求
+      if(this.show.show_img){ // 如果相册是true，那么就请求
         this.getRequest('/index/file/'+id).then(resp=>{
-          if(resp.length > 0){
-            this.images = resp;
-            this.show.show_img = true;
+          if(resp.status == 200) {
+            this.images = resp.obj;
           }else{
-            this.images = [];
-            this.show.show_img = false
-            this.$message({
-              message: '此日记没有相册',
-              type: 'info'
-            });
+            this.images = null;
           }
         })
       }
@@ -428,35 +437,23 @@ export default {
         }
       })
     },
+
     click_show_img(){
       if(!this.show.show_img){ // false 打开相册
-        this.show.show_img_flag = true;
         this.show.show_img= true;
         this.getRequest('/index/file/'+this.diaryForm.id).then(resp=>{
-          if(resp.length>0){
-            this.images = resp ;
+          if(resp.status == 200){
+            this.images = resp.obj;
           }else{
-            this.images=null;
-            this.$message({
-              message: '该日记还没有创建相册，快点上传照片留存美好回忆吧！',
-              type: 'info'
-            });
+            this.images = [];
           }
         })
       }else{ // true 关闭相册
-        this.show.show_img_flag = false;
         this.show.show_img = false;
+        this.images = [];
       }
+    },
 
-    },
-    makeDirectories(resp,max){
-      for(var i=0,len=resp.length;i<len;i++){
-        if((resp.data[i].title).toString().length >= max){
-          resp.data[i].title= resp.data[i].title.substring(0,max)+' ···';
-        }
-      }
-      this.directories = resp.data;
-    },
     click_collection(){
       this.getRequest('/index/note/collection').then(resp=>{
         if(resp) {
@@ -464,6 +461,7 @@ export default {
         }
       })
     },
+
     click_rate(){
       this.getRequest('/index/note/score/'+this.score).then(resp=>{
         if(resp){

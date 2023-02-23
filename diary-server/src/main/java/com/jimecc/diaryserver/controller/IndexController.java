@@ -1,5 +1,6 @@
 package com.jimecc.diaryserver.controller;
 
+import com.jimecc.diaryserver.entity.CommonResponse;
 import com.jimecc.diaryserver.entity.File;
 import com.jimecc.diaryserver.entity.Note;
 import com.jimecc.diaryserver.service.IndexService;
@@ -22,10 +23,10 @@ public class IndexController {
 
     // 查找文章的图片
     @GetMapping("/file/{note_id}")
-    public List<File> getFiles4article(@PathVariable int note_id){
+    public CommonResponse getFiles4article(@PathVariable int note_id){
         return indexService.getFilesList4Article(note_id);
     }
-
+    
     // 搜索
     @GetMapping("/search/{str}")
     public List<Note> search(@PathVariable String str){

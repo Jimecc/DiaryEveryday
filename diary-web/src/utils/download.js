@@ -3,8 +3,8 @@ import axios from 'axios'
 const service = axios.create({
     responseType: 'arraybuffer'
 })
-service.interceptors.request.use(config => {
-    config.headers['Authorization'] = window.sessionStorage.getItem('tokenStr');
+service.interceptors.request.use(config => {w
+    config.headers['Authorization'] = localStorage.getItem('tokenStr');
     return config
 }, error => {
     console.log(error)

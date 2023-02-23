@@ -1,5 +1,6 @@
 package com.jimecc.diaryserver.service;
 
+import com.jimecc.diaryserver.entity.CommonResponse;
 import com.jimecc.diaryserver.entity.File;
 import com.jimecc.diaryserver.entity.Note;
 
@@ -21,5 +22,5 @@ public interface IndexService {
 
     List<Note> searchDirectory(String title);
 
-    List<File> getFilesList4Article(int note_id);
+    CommonResponse getFilesList4Article(int note_id);
 }
