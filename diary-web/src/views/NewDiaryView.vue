@@ -222,7 +222,7 @@ export default {
       value:false,
       articleForm: {
         id: 0,
-        manager_id: 0,
+        user_id: 0,
         title: '',
         article: '',
         info: '',
@@ -233,7 +233,8 @@ export default {
         score: 0,
         collection: 0,
         shit: 0,
-        delete_or_not:0
+        delete_or_not:0,
+        hidden: 0
       },
       fileForm:{
         id: 0,

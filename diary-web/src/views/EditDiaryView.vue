@@ -138,7 +138,7 @@ export default {
     return {
       articleForm: {
         id: null,
-        manager_id:null,
+        user_id:null,
         title: '',
         create_date: new Date(),
         article: '',
@@ -185,24 +185,20 @@ export default {
     this.mounted_edit_diary();
   },
   methods:{
-    beforeUploadHandle(){
-    },
     handleUploadForm(param){
       let formData = new FormData()
       // 在formData中加入我们需要的参数
       formData.append('file', param.file)
-      formData.append('diary_id', 1)
+      formData.append('note_id', 1)
       alert("xxx1")
       // 向后端发送数据
-      this.postRequest('/file/upload', formData).then((res) => {
+      this.postRequest('/file/upload', formData).then((resp) => {
         alert("xxx1")
-        if (res.code === 200) {
+        if (resp.status === 200) {
           this.$message.success('修改信息成功')
         } else {
           this.$message.success('修改信息失败')
         }
-        this.formFileList = []
-        this.uploadFormFileList = []
       })
     },
     click_out_without_save(){
@@ -235,7 +231,8 @@ export default {
     },
     mounted_edit_diary(){
       if(this.diary_id != ''){
-        this.getRequest('/diary/article/'+this.$route.query.did).then(resp=>{
+        console.log("xxxxxxxx查询了编辑文章")
+        this.getRequest('/note/article/'+this.$route.query.did).then(resp=>{
           if (resp){
             // alert(JSON.stringify(resp.data.obj));
             this.articleForm = resp.obj;
@@ -298,14 +295,10 @@ export default {
       this.$router.push('/');
     },
     click_submit(){
-      this.postRequest('/diary/insert',this.articleForm).then(resp=>{
+      this.postRequest('/note/insert',this.articleForm).then(resp=>{
         if(resp){
-          // alert(resp.data.code);
-          // alert(JSON.stringify(this.articleForm));
-          if(resp.data.code == 200) {
-            this.articleForm = resp.data.obj;
-            // alert(JSON.stringify(resp.data.obj));
-            // alert(resp.message);
+          if(resp.status == 201 || resp.status==203) {
+            this.articleForm = resp.obj;
           }
         }
       })

@@ -39,40 +39,40 @@ public class NoteServiceImpl implements NoteService {
             }
         }catch (Exception e){
             log.error("删除文章失败，因为删除附属相册失败");
-            return CommonResponse.delErr("删除文章失败，因为删除附属相册失败");
+            return CommonResponse.error("删除文章失败，因为删除附属相册失败");
         }
         int delfile = fileMapper.DeleteFileByNoteId(id,UserUtils.getId());
         if(noteMapper.DeleteById(id) == 1){
-            return CommonResponse.delSuc("删除成功，并且同时删除了该相册携带的「"+delfile+"」张照片");
+            return CommonResponse.success("删除成功，并且同时删除了该相册携带的「"+delfile+"」张照片");
         }
-        return CommonResponse.delErr("删除失败");
+        return CommonResponse.error("删除失败");
     }
 
     public CommonResponse createNote(Note note){
         if(note.getId() != 0) {
             if (noteMapper.SelectNoteById(note.getId(),UserUtils.getId()) != null) {
                 if (noteMapper.UpdateById(note) == 1) {
-                    return CommonResponse.putSuc("提交成功", note);
+                    return CommonResponse.success("提交成功", note);
                 } else {
-                    return CommonResponse.putErr("提交失败");
+                    return CommonResponse.error("提交失败");
                 }
             }
         }
         note.setUser_id(UserUtils.getId());
         if(noteMapper.Insert2Note(note) == 0){
-            return CommonResponse.putErr("插入失败");
+            return CommonResponse.error("插入失败");
         }
-        return CommonResponse.putSuc("插入成功",note);
+        return CommonResponse.success("插入成功",note);
     }
 
     public CommonResponse getNoteById(int id){
         Note note = noteMapper.SelectNoteById(id,UserUtils.getId());
-        return CommonResponse.selSuc("success",note);
+        return CommonResponse.success("success",note);
     }
 
     public CommonResponse getLatestNote() {
         Note note = noteMapper.GetLatestNote(UserUtils.getId());
-        return CommonResponse.selSuc("success",note);
+        return CommonResponse.success("success",note);
     }
 
 }

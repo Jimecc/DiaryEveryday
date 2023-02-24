@@ -70,24 +70,24 @@ public class IndexServiceImpl implements IndexService {
         note.setTitle(title);
         List<Note> list =  noteMapper.Search4SideIndex(note);
         if(list.size()>0){
-            return CommonResponse.selSuc("文章查找成功",list);
+            return CommonResponse.success("文章查找成功",list);
         }
-        return CommonResponse.selErr("查找失败~没有符合的文件~");
+        return CommonResponse.error("查找失败~没有符合的文件~");
     }
 
     public CommonResponse getFilesList4Article(int note_id){
         List<File> resultList = fileMapper.Files4SideIndex(UserUtils.getId(),note_id);
         if(resultList.size()>0){
-            return CommonResponse.selSuc("噔噔噔~一大波照片正在来袭~~",resultList);
+            return CommonResponse.success("噔噔噔~一大波照片正在来袭~~",resultList);
         }
-        return CommonResponse.selErr("该日记还没有创建相册哦，请上传照片保存美好回忆吧~");
+        return CommonResponse.error("该日记还没有创建相册哦，请上传照片保存美好回忆吧~");
     }
 
     public CommonResponse CommonList(List list){
         if(list.size()>0){
-            return CommonResponse.selSuc("「目录」加载完成",list);
+            return CommonResponse.success("「目录」加载完成",list);
         }
-        return CommonResponse.selErr("「目录」加载失败，未找到符合内容的文章");
+        return CommonResponse.error("「目录」加载失败，未找到符合内容的文章");
     }
 
 }

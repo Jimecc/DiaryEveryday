@@ -45,7 +45,6 @@ export default {
         username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
         password1: [{required: true, message: '请输入密码', trigger: 'blur'}],
         password2: [{required: true, message: '请确认密码', trigger: 'blur'}]
-        // code: [{required: true, message: '请输入验证码', trigger: 'blur'}]
       }
     }
   },

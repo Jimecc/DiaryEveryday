@@ -159,7 +159,7 @@
                   :http-request="handleUploadForm"
                   class="upload-demo"
                   multiple
-                  show-file-list="false">
+                  :show-file-list="false">
                 <el-button type="primary" style="width: 300%;margin: 5px 5% 0 5%">上传图片</el-button>
               </el-upload>
             </div>
@@ -312,10 +312,6 @@ export default {
     click_delete_image(index){
       this.deleteRequest('/file/delete/'+index).then(resp=>{
         if(resp.status == 200){
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          });
           this.getRequest('/index/file/'+this.diaryForm.id).then(resp=> {
             this.images = resp.obj;
           });
@@ -329,7 +325,7 @@ export default {
       this.postRequest('/file/upload', formData).then((res) => {
         if (res.status == 200) {
           this.$message.success('提交成功');
-          this.getRequest('/file/list4article/'+this.diaryForm.id).then(resp=> {
+          this.getRequest('/index/file/'+this.diaryForm.id).then(resp=> {
             this.images = resp.obj;
           });
         } else {

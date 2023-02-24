@@ -30,12 +30,12 @@ public class FileServiceImpl implements FileService {
             FastDFSUtils.deleteFile(file.getGroupName(),file.getRemoteFileName());
             result = fileMapper.DeleteFileById(id);
             if(result == 1){
-                return CommonResponse.delSuc("删除成功！");
+                return CommonResponse.success("删除成功！");
             }
         }catch (Exception e){
-            return CommonResponse.delErr("删除失败..出错了..");
+            return CommonResponse.error("删除失败..出错了..");
         }
-        return CommonResponse.delErr("删除失败");
+        return CommonResponse.error("删除失败");
     }
 
     public int insertFile(File file){
@@ -58,9 +58,9 @@ public class FileServiceImpl implements FileService {
         insertfile.setCreate_date(date2);
         int result = insertFile(insertfile);
         if(result == 1){
-            return CommonResponse.putSuc("文件上传成功");
+            return CommonResponse.success("文件上传成功");
         }
-        return CommonResponse.putErr("文件上传失败");
+        return CommonResponse.error("文件上传失败");
     }
     
 }
