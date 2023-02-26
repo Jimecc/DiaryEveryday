@@ -9,12 +9,12 @@
           <!-- 下拉框 -->
           <el-dropdown>
             <!-- 小头像 -->
-            <el-avatar style="border: #666666 .1px solid;margin-top: 1.5px;margin-left: 8px" size="small" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGPw0VmAOeVVAAGrxVybNPY458.JPG"></el-avatar>
+            <el-avatar style="border: #666666 .1px solid;margin-top: 1.5px;margin-left: 8px" size="small" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGP6ZcaAQkW8AAGrxVybNPY083.JPG"></el-avatar>
             <!-- 下拉框菜单 -->
             <el-dropdown-menu slot="dropdown" style="width: 180px;">
               <div style="width: 80%;left: 0;right: 0;margin: 15px auto 10px auto;box-shadow: 0 0 5px #999999;border-radius: 10px;">
                 <div style="width: 100%;text-align: center;">
-                  <el-avatar :size="60" style="box-shadow: 0 0 5px #999999;margin-top: 15px" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGPw0VmAOeVVAAGrxVybNPY458.JPG"></el-avatar>
+                  <el-avatar :size="60" style="box-shadow: 0 0 5px #999999;margin-top: 15px" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGP6ZcaAQkW8AAGrxVybNPY083.JPG"></el-avatar>
                 </div>
                 <div style="width: 100%;text-align: center;overflow-y: hidden;margin-top: 5px">
                   <span style="border-bottom: #cecece .1px solid;padding: 20px 10px 15px 10px;">Jimecc</span>
@@ -23,10 +23,10 @@
                   <el-button style="height: 34px;font-size:10px;margin-top: 8px;margin-bottom: 20px" type="info" plain >🏠 个人中心</el-button>
                 </div>
               </div>
-              <el-dropdown-item>
+              <el-dropdown-item style="border-bottom: #cccccc .1px solid">
                 <el-button @click="click_button_layout" type="text" size="small" style="color: #999999;width: 100%;text-align: left">设置</el-button>
               </el-dropdown-item>
-              <el-dropdown-item click="click_button_layout">
+              <el-dropdown-item>
                 <el-button @click="click_button_layout" type="text" size="small" style="color: #999999;width: 100%;text-align: left">退出登录</el-button>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -42,7 +42,6 @@
         <div class="header2-1">
           <el-button @click="initIndex" class="button1" size="small" icon="el-icon-milk-tea"></el-button>
           <el-button @click="click_show_date" class="button2" size="small" icon="el-icon-date"></el-button>
-          <el-button @click="click_show_color" class="button2" size="small" icon="el-icon-price-tag"></el-button>
           <el-button @click="click_collection" class="button2" size="small" icon="el-icon-star-off"></el-button>
           <el-button @click="click_order" class="button2" size="small" :icon="icons.order"></el-button>
         </div>
@@ -231,6 +230,18 @@
         </div>
       </div>
     </el-dialog>
+    <el-dialog width="60%" :visible.sync="show.UserSettings">
+      <div style="background-color: red;width: 100%;height: 500px">
+        <div style="height: 60%;width: 100%;background-color: coral;display: flex">
+          <div style="width: 30%;height: 100%;background-color: #666666">
+            <el-avatar shape="square" style="border-radius: 50%;margin: 5% 10% 0 10%" :size="200" src="http://192.168.199.100:8888/group1/M00/00/03/wKjHZGP6ZcaAQkW8AAGrxVybNPY083.JPG"></el-avatar>
+          </div>
+        </div>
+        <div style="height: 40%;width: 100%;background-color: #ffcebe">
+
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -275,7 +286,9 @@ export default {
         fullscreen: false,
         show_img: false, // 为了开发改成true，最后一定要改为false
         show_editor: false,
-        show_img_flag: false
+        show_img_flag: false,
+        UserSettings: false
+
       },
       colors:{
         face:['#99A9BF', '#F7BA2A', '#FF9900']

@@ -5,11 +5,17 @@ import LoginView from "../views/LoginView.vue";
 import NewDiaryView from "@/views/NewDiaryView.vue";
 import EditDiaryView from "@/views/EditDiaryView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import Settings from "@/views/Settings.vue";
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'settings',
+    component: Settings
+  },
+  {
+    path: '/diary',
     name: 'diary',
     component: DiaryView
   },{

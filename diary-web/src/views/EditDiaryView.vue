@@ -83,11 +83,10 @@
 
               <el-upload
                   :http-request="handleUploadForm"
-                  :before-upload="beforeUploadHandle"
                   class="upload-demo"
-                  action="/file/upload"
                   multiple
-                  :limit="3">
+                  :show-file-list="false"
+              >
                   <el-button size="small" type="text" icon="el-icon-folder-opened">新建相关相册</el-button>
               </el-upload>
 

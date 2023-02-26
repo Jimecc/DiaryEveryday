@@ -18,7 +18,6 @@
         <el-form-item prop="password2" class="el-form-item">
             <el-input v-model="registerParam.password2" class="input-info" placeholder="请确认密码" show-password></el-input>
         </el-form-item>
-
         <el-button type="primary" @click="button_submit" class="button-submit">注&nbsp;&nbsp;&nbsp;册</el-button>
         <div style="text-align: right;">
           <el-button size="small" @click="button_go_login" type="text" class="button-go-login">已有账号，去登录</el-button>
