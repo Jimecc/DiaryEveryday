@@ -72,7 +72,7 @@
     </insert>
 
     <update id="UpdateById" parameterType="com.jimecc.diaryserver.entity.Note">
-        UPDATE note SET id=#{id}
+        UPDATE note SET update_date=now()
                 <if test="null != title">
                     ,title=#{title}
                 </if>

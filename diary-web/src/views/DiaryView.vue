@@ -261,7 +261,7 @@ export default {
       search_date:new Date(),
       diaryForm:{
         id:null,
-        manager_id:null,
+        user_id:null,
         title:null,
         article:'',
         info:'',
@@ -493,7 +493,7 @@ export default {
       this.diaryForm.collection = null;
       this.diaryForm.shit = null;
       this.diaryForm.delete = null;
-      this.diaryForm.manager_id = null;
+      this.diaryForm.user_id = null;
     }
   }
 }
